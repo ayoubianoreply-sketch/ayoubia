@@ -113,7 +113,7 @@ export default function HomePage() {
             <span className="branch-home-shade" />
             <span className="branch-home-copy">
               <small>{branch.slug === 'literie' ? 'LITERIE' : 'SALON'}</small>
-              <strong>{ar ? branch.name_ar : branch.name_fr}</strong>
+              <strong>{branch.slug === 'literie' ? 'Ayoubia Literie' : 'Ayoubia Salon'}</strong>
               <i className="branch-discover-button">{text('اكتشف الأقسام', 'Découvrir les catégories')} <b>{arrow}</b></i>
             </span>
           </Link>)}
