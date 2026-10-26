@@ -1,15 +1,30 @@
-export type MockCategoryProduct = { id: string; name_ar: string; price_dzd: number; image_url: string; description_ar: string };
-export type MockCategory = { slug: string; name_ar: string; intro: string; image_url: string; products: MockCategoryProduct[] };
+import { mockBranchCategories, type StoreBranchCategory } from '@/lib/mock-branches';
 
-const p = (category: string, index: number, name_ar: string, price_dzd: number, image_url: string, description_ar: string): MockCategoryProduct => ({ id: `mock-${category}-${index}`, name_ar, price_dzd, image_url, description_ar });
-
-export const mockCategories: Record<string, MockCategory> = {
-  salon: { slug: 'salon', name_ar: 'أثاث الجلوس', intro: 'قطع مختارة لتجمع العائلة براحة وأناقة.', image_url: '/assets/reference/category-living.png', products: [
-    p('salon', 1, 'طقم جلوس لورينزا', 268000, '/assets/reference/product-268000.png', 'تصميم رحب بأقمشة ناعمة وتفاصيل عصرية.'), p('salon', 2, 'مجموعة الكنب الكلاسيكي', 315000, '/assets/reference/product-165000.png', 'خطوط أنيقة وراحة تدوم طوال اليوم.'), p('salon', 3, 'أريكة ميرا بثلاثة مقاعد', 185000, '/assets/reference/hero-sofa.png', 'قماش متين ودرجات هادئة تناسب كل المساحات.'), p('salon', 4, 'وسائد لمسة دافئة', 6900, '/assets/reference/product-6900.png', 'إضافة بسيطة تمنح غرفة الجلوس روحاً جديدة.'), p('salon', 5, 'طقم ضيافة نوفا', 165000, '/assets/reference/category-living.png', 'راحة عملية بتصميم يليق بضيوفك.') ] },
-  chambres: { slug: 'chambres', name_ar: 'غرف النوم', intro: 'مساحات هادئة وتفاصيل مصممة لراحة يومك.', image_url: '/assets/reference/category-bedroom.png', products: [
-    p('bed', 1, 'سرير نوم مودرن', 48900, '/assets/reference/product-48900.png', 'تصميم بسيط بخطوط نظيفة ولمسة دافئة.'), p('bed', 2, 'غرفة نوم أوريانا', 198000, '/assets/reference/category-bedroom.png', 'تناغم أنيق بين الخشب والألوان الطبيعية.'), p('bed', 3, 'سرير ميداني كينغ', 137000, '/assets/reference/product-165000.png', 'مساحة واسعة ومظهر فندقي راقٍ.'), p('bed', 4, 'طاولة جانبية لونا', 24500, '/assets/reference/category-decor.png', 'قطعة عملية بتفاصيل هادئة بجوار السرير.'), p('bed', 5, 'طقم مفارش روز', 18500, '/assets/reference/product-12500.png', 'ملمس ناعم وألوان مريحة لغرفة النوم.') ] },
-  rideaux: { slug: 'rideaux', name_ar: 'الستائر والأقمشة', intro: 'أقمشة راقية تضفي دفئاً وخصوصية على منزلك.', image_url: '/assets/reference/category-curtains.png', products: [
-    p('curtain', 1, 'ستائر فاخرة بنقشة هادئة', 12500, '/assets/reference/product-12500.png', 'نسيج أنيق ينساب بخفة ويكمل ديكور الغرفة.'), p('curtain', 2, 'ستائر شيفون أورورا', 9800, '/assets/reference/category-curtains.png', 'تسمح بمرور الضوء الطبيعي بنعومة.'), p('curtain', 3, 'قماش مخملي كلاسيكي', 15900, '/assets/reference/category-decor.png', 'ملمس غني وخصوصية مثالية للمساء.'), p('curtain', 4, 'ستائر لينن طبيعي', 11200, '/assets/reference/hero-sofa.png', 'خامة طبيعية بألوان محايدة سهلة التنسيق.'), p('curtain', 5, 'طقم ستائر مزدوج', 18900, '/assets/reference/product-6900.png', 'طبقتان لتتحكمي بالضوء والخصوصية.') ] },
-  deco: { slug: 'deco', name_ar: 'السجاد والديكور', intro: 'تفاصيل صغيرة تصنع فرقاً كبيراً في أجواء البيت.', image_url: '/assets/reference/category-decor.png', products: [
-    p('decor', 1, 'وسائد ديكور ناعمة', 6900, '/assets/reference/product-6900.png', 'ألوان متناغمة ولمسة مريحة لكنبتك.'), p('decor', 2, 'سجادة لورين بخيوط ناعمة', 32900, '/assets/reference/category-decor.png', 'ملمس لطيف يضيف عمقاً ودفئاً للمكان.'), p('decor', 3, 'مزهرية سيراميك أورا', 8400, '/assets/reference/category-curtains.png', 'قطعة بسيطة تكمل طاولتك أو رفك المفضل.'), p('decor', 4, 'طقم ديكور منزلي', 14500, '/assets/reference/product-12500.png', 'تنسيق متوازن يضيف لمسة أنيقة لغرفتك.'), p('decor', 5, 'مرآة حائط مودرن', 22500, '/assets/reference/category-bedroom.png', 'شكل أنيق يعكس الضوء ويمنح المساحة اتساعاً.') ] },
+export type MockCategoryProduct = {
+  id: string;
+  name_ar: string;
+  name_fr?: string;
+  price_dzd: number;
+  image_url: string;
+  description_ar: string;
+  description_fr?: string;
 };
+export type MockCategory = StoreBranchCategory & {
+  intro: string;
+  products: MockCategoryProduct[];
+};
+
+const sampleProducts: MockCategoryProduct[] = [
+  { id: 'sample-1', name_ar: 'اختيار أيوبيا المميز', name_fr: 'Sélection Ayoubia', price_dzd: 268000, image_url: '/assets/reference/product-268000.png', description_ar: 'جودة وأناقة بتفاصيل مختارة بعناية.', description_fr: 'Qualité et élégance, sélectionnées avec soin.' },
+  { id: 'sample-2', name_ar: 'لمسة من الراحة', name_fr: 'Une touche de confort', price_dzd: 6900, image_url: '/assets/reference/product-6900.png', description_ar: 'تفاصيل عملية تضيف لمسة دافئة لمنزلك.', description_fr: 'Un détail pratique et chaleureux pour votre intérieur.' },
+  { id: 'sample-3', name_ar: 'تصميم عصري', name_fr: 'Design contemporain', price_dzd: 12500, image_url: '/assets/reference/product-12500.png', description_ar: 'خامات منتقاة وألوان سهلة التنسيق.', description_fr: 'Des matières choisies et des couleurs faciles à associer.' },
+  { id: 'sample-4', name_ar: 'مجموعة أنيقة', name_fr: 'Collection élégante', price_dzd: 48900, image_url: '/assets/reference/product-48900.png', description_ar: 'تصميم أنيق يجمع بين العملية والجمال.', description_fr: 'Un design élégant, à la fois pratique et raffiné.' },
+  { id: 'sample-5', name_ar: 'اختيار كلاسيكي', name_fr: 'Choix classique', price_dzd: 165000, image_url: '/assets/reference/product-165000.png', description_ar: 'قطعة متناسقة لتكمل أناقة مساحتك.', description_fr: 'Une pièce harmonieuse pour compléter votre intérieur.' },
+];
+
+const categories = [...mockBranchCategories.literie, ...mockBranchCategories.salon];
+export const mockCategories: Record<string, MockCategory> = Object.fromEntries(categories.map((category) => [category.slug, {
+  ...category,
+  intro: category.subtitle_ar || 'منتجات مختارة بعناية من أيوبيا.',
+  products: sampleProducts.map((product, index) => ({ ...product, id: `${category.slug}-${index + 1}`, image_url: index === 0 ? category.image_url : product.image_url })),
+}])) as Record<string, MockCategory>;

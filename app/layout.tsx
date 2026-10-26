@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import SplashScreen from '../components/SplashScreen';
 import StorefrontOverlays from '../components/StorefrontOverlays';
+import Providers from './providers';
+import VisitorTracker from '@/components/VisitorTracker';
 
 export const metadata: Metadata = {
   title: 'AYOUBIA',
@@ -10,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="ar" dir="rtl"><body><SplashScreen />{children}<StorefrontOverlays /></body></html>;
+  return <html lang="ar" dir="rtl"><body><Providers><SplashScreen />{children}<StorefrontOverlays /><VisitorTracker /></Providers></body></html>;
 }

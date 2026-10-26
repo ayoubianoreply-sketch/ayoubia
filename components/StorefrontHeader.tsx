@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { openAuth, openCart } from '@/lib/store-events';
 import { createBrowserSupabaseClient } from '@/lib/supabase/client';
+import { useLocale } from '@/components/LocaleProvider';
 
 export default function StorefrontHeader() {
+  const { locale, setLocale } = useLocale();
   const [count, setCount] = useState(0);
   const [logoUrl, setLogoUrl] = useState('/logo.png');
   useEffect(() => {
@@ -29,12 +31,16 @@ export default function StorefrontHeader() {
 
   return <header className="site-header"><nav className="navbar" aria-label="التنقل الرئيسي">
     <div className="nav-tools">
-      <a className="icon-link search-icon" href="#products" aria-label="بحث"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></a>
+      <a className="icon-link search-icon" href="/#branches" aria-label="بحث"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></a>
       <button className="icon-link" type="button" onClick={openAuth} aria-label="حساب المستخدم"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.7-3.5 3.2-5.3 7-5.3s6.3 1.8 7 5.3"/></svg></button>
       <button className="icon-link cart-trigger" type="button" onClick={openCart} aria-label="سلة التسوق"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8h13l1.2 12H4.3L5.5 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>{count > 0 && <small>{count}</small>}</button>
-      <a className="delivery" href="#shipping"><svg className="delivery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.5h12v11h-12zM14.5 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/></svg><span>توصيل لجميع الولايات <b>69 ولاية</b></span></a>
+      <Link className="nav-track-link" href="/track" aria-label={locale === 'ar' ? 'تتبع طلبي' : 'Suivre ma commande'}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16v14H4z"/><path d="M8 9h8M8 12.5h5"/><path d="m14.5 16 1.5 1.5 3-3"/></svg>
+        <span>{locale === 'ar' ? 'تتبع طلبي' : 'Suivre ma commande'}</span>
+      </Link>
+      <button className="locale-toggle" type="button" onClick={() => setLocale(locale === 'ar' ? 'fr' : 'ar')} aria-label="Changer la langue / تغيير اللغة">{locale === 'ar' ? 'FR' : 'عربي'}</button>
     </div>
-    <div className="nav-links"><Link href="/">الرئيسية</Link><Link href="/category/salon">غرف الجلوس</Link><Link href="/category/chambres">غرف النوم</Link><Link href="/category/rideaux">الستائر</Link><Link href="/category/deco">الديكور</Link><a href="/#about">من نحن</a></div>
+    <div className="nav-links"><Link href="/">{locale === 'ar' ? 'الرئيسية' : 'Accueil'}</Link><Link href="/branch/literie">{locale === 'ar' ? 'أيوبيا مستلزمات الفراش' : 'Ayoubia Literie'}</Link><Link href="/branch/salon">{locale === 'ar' ? 'أيوبيا صالون' : 'Ayoubia Salon'}</Link><Link href="/about">{locale === 'ar' ? 'من نحن' : 'À propos'}</Link></div>
     <Link href="/" className="brand" aria-label="AYOUBIA الصفحة الرئيسية"><img src={logoUrl} alt="AYOUBIA Logo" /></Link>
   </nav></header>;
 }
