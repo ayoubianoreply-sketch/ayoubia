@@ -7,5 +7,7 @@ export async function GET(request: NextRequest) {
     const supabase = await createServerSupabaseClient();
     await supabase.auth.exchangeCodeForSession(code);
   }
-  return NextResponse.redirect(new URL('/', request.url));
+  // Preserve the host that initiated OAuth (localhost in local development,
+  // the deployed host in production) instead of using a fixed site URL.
+  return NextResponse.redirect(new URL('/', request.nextUrl.origin));
 }

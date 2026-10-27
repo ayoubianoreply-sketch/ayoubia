@@ -8,7 +8,7 @@ import VisitorTracker from '@/components/VisitorTracker';
 export const metadata: Metadata = {
   title: 'AYOUBIA',
   description: 'أجود أنواع الأفرشة والديوكورات العصرية بلمسة تجمع بين الفخامة والبساطة.',
-  icons: { icon: '/logo.png' },
+  icons: { icon: '/favicon.svg', shortcut: '/favicon.svg' },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

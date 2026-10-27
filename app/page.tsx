@@ -86,6 +86,7 @@ export default function HomePage() {
   const money = (value: number) => `${new Intl.NumberFormat(ar ? 'ar-DZ' : 'fr-DZ').format(value)} ${ar ? 'دج' : 'DA'}`;
   return <>
     <StorefrontHeader />
+    <div className="slogan-strip" dir="ltr"><p>More than furniture… It’s your lifestyle.</p></div>
     <main>
       <section className="hero hero-full" id="home">
         <img className="hero-background" src={heroImage} alt={text('أريكة أنيقة في غرفة جلوس بألوان دافئة', 'Canapé élégant dans un salon aux tons chaleureux')} />

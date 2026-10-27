@@ -14,7 +14,7 @@ export default function SplashScreen() {
 
   if (!visible) return null;
   return <div className={`splash-screen${leaving ? ' is-leaving' : ''}`} role="status" aria-label="جاري تحميل AYOUBIA">
-    <img src="/logo.png" alt="AYOUBIA Logo" />
+    <img className="filter brightness-0" src="/logo.png" alt="AYOUBIA Logo" />
     <span className="splash-dots" aria-hidden="true">
       {Array.from({ length: 5 }, (_, index) => <i key={index} />)}
     </span>

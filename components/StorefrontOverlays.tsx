@@ -70,7 +70,7 @@ function AuthModal({ onClose }: { onClose: () => void }) {
     setBusy(true); setMessage('');
     try {
       const supabase = createBrowserSupabaseClient();
-      const { error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: `${window.location.origin}/auth/callback`, queryParams: { prompt: 'select_account' } } });
+      const { error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin + '/auth/callback', queryParams: { prompt: 'select_account' } } });
       if (error) throw error;
     } catch (error) { setMessage(error instanceof Error ? error.message : 'تعذر بدء تسجيل الدخول باستخدام Google.'); setBusy(false); }
   };
@@ -86,15 +86,58 @@ function AuthModal({ onClose }: { onClose: () => void }) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         setMessage('تم تسجيل الدخول بنجاح.');
-        window.setTimeout(onClose, 700);
+        onClose();
       } else {
         if (password !== data.get('confirmPassword')) throw new Error('كلمتا المرور غير متطابقتين.');
         if (!data.get('terms')) throw new Error('يرجى الموافقة على شروط الخصوصية وسياسة الاستخدام.');
-        const { error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/auth/callback`, data: { first_name: data.get('firstName'), last_name: data.get('lastName'), phone: `${data.get('countryCode')}${data.get('phone')}`, phone_secondary: data.get('phone2') || null } } });
-        if (error) throw error;
-        setMessage('تم إنشاء الحساب. تحققي من بريدك الإلكتروني لتأكيده.');
+        const firstName = String(data.get('firstName') ?? '').trim();
+        const lastName = String(data.get('lastName') ?? '').trim();
+        const phone = `${data.get('countryCode')}${String(data.get('phone') ?? '').trim()}`;
+        const { data: signupData, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: window.location.origin + '/auth/callback',
+            data: { first_name: firstName, last_name: lastName, phone, phone_secondary: data.get('phone2') || null },
+          },
+        });
+        if (error) {
+          console.error('Error creating account:', error);
+          alert(`تعذر إنشاء الحساب: ${error.message}`);
+          setMessage(error.message);
+          return;
+        }
+
+        if (!signupData.session) {
+          const confirmationMessage = 'تم إنشاء الحساب! يرجى مراجعة بريدك الإلكتروني لتأكيد الحساب.';
+          alert(confirmationMessage);
+          onClose();
+          return;
+        }
+        if (!signupData.user) throw new Error('تم بدء الجلسة لكن لم يُرجع Supabase بيانات المستخدم.');
+
+        // Do not write to profiles until Supabase has authenticated this user.
+        const { error: profileError } = await supabase.from('profiles').upsert({
+          id: signupData.user.id,
+          first_name: firstName,
+          last_name: lastName,
+          phone,
+        }, { onConflict: 'id' }).select();
+        if (profileError) {
+          console.error('Error saving signup profile:', profileError);
+          alert(`تم تسجيل الدخول، لكن تعذر حفظ بيانات الملف الشخصي: ${profileError.message}`);
+        }
+        alert('تم إنشاء الحساب وتسجيل الدخول بنجاح.');
+        onClose();
+        window.location.assign('/');
+        return;
       }
-    } catch (error) { setMessage(error instanceof Error ? error.message : 'تعذر إكمال الطلب.'); }
+    } catch (error) {
+      const details = error instanceof Error ? error.message : 'تعذر إكمال الطلب.';
+      console.error('Authentication error:', error);
+      setMessage(details);
+      alert(`حدث خطأ: ${details}`);
+    }
     finally { setBusy(false); }
   };
 
@@ -111,7 +154,7 @@ function AuthModal({ onClose }: { onClose: () => void }) {
       <label>كلمة المرور<input name="password" type="password" minLength={8} required placeholder="8 أحرف على الأقل" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} dir="ltr" /></label>
       {mode === 'signup' && <><label>تأكيد كلمة المرور<input name="confirmPassword" type="password" minLength={8} required placeholder="أعيدي كتابة كلمة المرور" dir="ltr" /></label><label className="terms-check"><input name="terms" type="checkbox" required /><span>أوافق على شروط الخصوصية وسياسة الاستخدام</span></label></>}
       {message && <p className={`auth-message${message.includes('تم ') ? ' success' : ''}`} role="status">{message}</p>}
-      <button className="button button-green auth-submit" disabled={busy}>{busy ? 'يرجى الانتظار…' : mode === 'signup' ? 'إنشاء حساب' : 'تسجيل الدخول'}</button>
+      <button className="button button-green auth-submit" disabled={busy}>{busy ? mode === 'signup' ? 'جاري الإنشاء...' : 'جارٍ تسجيل الدخول…' : mode === 'signup' ? 'إنشاء حساب' : 'تسجيل الدخول'}</button>
     </form>
   </section></div>;
 }
