@@ -25,7 +25,7 @@ export default function StorefrontFooter() {
       <a href="mailto:Ayoubia.Support@gmail.com"><span>{ar ? 'الدعم' : 'Assistance'}</span>Ayoubia.Support@gmail.com</a>
       <a href="mailto:Ayoubia.Delivery@gmail.com"><span>{ar ? 'التوصيل' : 'Livraison'}</span>Ayoubia.Delivery@gmail.com</a>
       <a href="mailto:Ayoubia.Careers@gmail.com"><span>{ar ? 'التوظيف' : 'Recrutement'}</span>Ayoubia.Careers@gmail.com</a>
-      <a href="tel:0669140096"><span>{ar ? 'الإدارة' : 'Administration'}</span><bdi>0669140096</bdi></a>
+      <a href="tel:0655791424"><span>Linge</span><bdi>0655791424</bdi></a>
       <a href="tel:0666404303"><span>{ar ? 'المتجر والموظفون' : 'Magasin et équipe'}</span><bdi>0666404303</bdi></a>
     </section>
 

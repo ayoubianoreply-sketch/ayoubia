@@ -17,7 +17,7 @@ const arabicSections: PolicySection[] = [
     'الجهة المسؤولة عن معالجة بيانات المتجر هي AYOUBIA HOME.',
     'لأسئلة الخصوصية أو طلبات الوصول والتصحيح، تواصل مع فريق الدعم عبر Ayoubia.Support@gmail.com.',
     'للاستفسارات المتعلقة بالتوصيل، استخدم Ayoubia.Delivery@gmail.com.',
-    'يمكنك التواصل هاتفياً مع الإدارة على 0669140096 أو مع المتجر والموظفين على 0666404303.',
+    'يمكنك التواصل هاتفياً مع Linge على 0655791424 أو مع المتجر والموظفين على 0666404303.',
   ] },
   { title: '3. البيانات التي تقدمها عند الشراء', clauses: [
     'نجمع الاسم واللقب ورقم الهاتف لتسجيل الطلب والتواصل بشأنه.',
@@ -161,7 +161,7 @@ const arabicSections: PolicySection[] = [
 
 const frenchSections: PolicySection[] = [
   { title: '1. Introduction et champ d’application', clauses: ['Cette politique explique comment AYOUBIA HOME traite les informations lors de la visite du site, d’un contact ou d’une commande.', 'Elle couvre les données que vous fournissez et certaines informations techniques nécessaires au fonctionnement du site.', 'Nous utilisons les informations pour des objectifs liés à la boutique et cherchons à limiter la collecte au nécessaire.', 'Veuillez lire cette page avant de créer un compte, de commander ou de postuler.'] },
-  { title: '2. Responsable et contacts', clauses: ['AYOUBIA HOME est responsable du traitement des données de la boutique.', 'Pour toute question de confidentialité ou demande d’accès et de rectification : Ayoubia.Support@gmail.com.', 'Pour la livraison : Ayoubia.Delivery@gmail.com.', 'Vous pouvez joindre l’administration au 0669140096 et le magasin et son équipe au 0666404303.'] },
+  { title: '2. Responsable et contacts', clauses: ['AYOUBIA HOME est responsable du traitement des données de la boutique.', 'Pour toute question de confidentialité ou demande d’accès et de rectification : Ayoubia.Support@gmail.com.', 'Pour la livraison : Ayoubia.Delivery@gmail.com.', 'Vous pouvez joindre Linge au 0655791424 et le magasin et son équipe au 0666404303.'] },
   { title: '3. Données fournies lors d’une commande', clauses: ['Nous recueillons vos nom et prénom ainsi que votre téléphone pour enregistrer et suivre la commande.', 'La wilaya, la daïra et l’adresse ou le repère servent à organiser la livraison.', 'Nous pouvons enregistrer les produits, quantités, couleurs, montant et statut de la commande.', 'Un second téléphone et des remarques peuvent être fournis facultativement.'] },
   { title: '4. Compte et profil', clauses: ['La création d’un compte peut nécessiter votre adresse e-mail, votre nom, votre téléphone et des informations de profil.', 'Avec un fournisseur de connexion externe, nous recevons les informations de base autorisées par ce fournisseur.', 'Vous pouvez ajouter une photo de profil ou modifier les informations disponibles sur la page du compte.', 'Nous ne demandons pas et ne voyons pas le mot de passe de votre compte externe.'] },
   { title: '5. Candidatures et CV', clauses: ['Une candidature comprend le nom complet, l’e-mail, le téléphone et le poste souhaité.', 'Le CV PDF est envoyé vers un espace de stockage dédié et privé.', 'Ces données servent à examiner la candidature et à contacter le candidat au sujet d’opportunités.', 'Les données de recrutement ne servent pas au marketing ni au traitement des commandes.'] },
